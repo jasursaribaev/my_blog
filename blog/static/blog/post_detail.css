@@ -1,0 +1,54 @@
+.blog__title {
+    color: tomato;
+    margin-bottom: 22px;
+}
+
+.blog__text {
+    line-height: normal;
+}
+.comments {
+    margin-top: 20px;
+}
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+}
+.comment-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.comment-info {
+    margin-left: 20px;
+}
+.comment-author {
+    margin-bottom: 4px;
+}
+.comment-time {
+    margin: 6px 0;
+    color: #ccc;
+}
+.comment-body {
+    color: #383737;
+ }
+.comment-text {
+    width: 39%;
+    height: 90px;
+    min-height: 80px;
+}
+
+.comment-btn {
+    padding: 4px 8px;
+    background-color: rgb(115, 236, 152);
+    border: none;
+    border-radius: 4px;
+}
+
+.comment-group {
+    display: flex;
+    gap: 0 10px;
+}
+
+.fas.fa-trash {
+    color: tomato;
+}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    All Blogs
+{% endblock  %}
+
+{%block css_files%}
+    <link rel="stylesheet" href="{% static 'blog/blogs.css' %}">
+{%endblock%}
+
+{%block content%}
+<div class="blogs-wrap">
+    <div class="blogs">
+        {% for blog in blogs %}
+            <div class="blog">
+                <img class="blog-image" src="{{blog.image.url}}" alt="img">
+                <div>
+                    <a class="post-category" href="#">{{blog.category.name}}</a>
+                    <h2 class="blog__title">{{blog.title}}</h2>
+                    <p class="blog__text">{{blog.body|truncatechars:120}}</p>
+                    <a class="blog__link" href="{% url 'blog:post_detail' blog.slug %}">Read more...</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        {% if blogs.has_previous %}
+            <a class="pagination__link" href="{% url 'blog:all-posts' %}?page={{ blogs.previous_page_number }}">previous</a>
+        {% endif %}
+        {% for page in paginator.page_range %}
+            <a class="pagination__link" href="{% url 'blog:all-posts' %}?page={{ page }}">{{page}}</a>
+        {%endfor%}
+        {% if blogs.has_next %}
+                <a class="pagination__link" href="{% url 'blog:all-posts' %}?page={{ blogs.next_page_number }}">next</a>
+        {% endif %}
+    </div>
+</div>
+{%endblock%}

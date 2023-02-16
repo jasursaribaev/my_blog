@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>
+    {%block title%}
+    {%endblock%}
+</title>
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {%block css_files%}
+    {%endblock%}
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-left">
+                <a class="logo_link" href="{% url 'blog:home' %}">Blog</a>
+                <ul class="menu-list">
+                    <li class="menu-list__item">
+                        <a class="menu-list__link" href="{% url 'blog:home' %}" >
+                            Home
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a class="menu-list__link" href="{% url 'blog:all-posts' %}">
+                            Blogs
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a class="menu-list__link">
+                            About
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a class="menu-list__link" href="#">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                {% if request.user.is_authenticated %}
+                    {% comment %} <a href="{% url 'users:logout' %}">Logout</a> {% endcomment %}
+                    <img class="user-image" src="{{user.image.url}}" alt=""  onclick="toggleMenu();">
+                {% else %}
+                    <a class="login" href="{% url 'users:login' %}">
+                        Login
+                    </a>
+                    <a class="signup" href="{% url 'users:register' %}">
+                        Sign up
+                    </a>
+                {% endif %}
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <h2 class="user-info_name">{{user.username|title}}</h2>
+                            <hr>
+                            <a class="sub-menu-link" href="#">
+                                <p>Dashboard</p>
+                                <span></span>
+                            </a>
+                            <a class="sub-menu-link" href="#">
+                                <p>Create Post</p>
+                                <span></span>
+                            </a>
+                            <a class="sub-menu-link" href="#">
+                                <p>Reading List</p>
+                                <span></span>
+                            </a>
+                            <a class="sub-menu-link" href="{% url 'users:profile-edit' %}">
+                                <p>Settings</p>
+                                <span></span>
+                            </a>
+                            <hr>
+                            <a class="sub-menu-link" href="{% url 'users:logout' %}">
+                                <p>Logout</p>
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {% if messages %}
+        {%for message in messages%}
+            {{message}}
+        {%endfor%}
+    {%endif%}
+    {%block content%}
+    {%endblock%}
+
+    {%block js_files%}
+        <script src="{% static 'js/main.js' %}"></script>
+    {%endblock%}
+</body>
+</html>

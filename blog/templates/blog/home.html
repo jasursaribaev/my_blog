@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock  %}
+
+{%block css_files%}
+    <link rel="stylesheet" href="{% static 'blog/home.css' %}">
+{%endblock%}
+
+{%block content%}
+<div class="container container__inner">
+    <div class="left">
+        <h2 class="section-title">New Blogs</h2>
+        <div class="blogs">
+            {% for new in new_posts %}
+                <div class="blog">
+                    <a class="post-category" href="#">{{new.category.name}}</a>
+                    <h2 class="blog__title">{{new.title}}</h2>
+                    <p class="blog__text">{{new.body|truncatechars:120}}</p>
+                    <a class="blog__link" href="{% url 'blog:post_detail' new.slug %}">Read more...</a>
+                </div>
+            {% endfor %}
+        </div>
+        <h2 class="section-title">Top blogs</h2>
+        <div class="top-blogs">
+            {% for new in popular_posts %}
+                <div class="blog">
+                    <a class="post-category" href="#">{{new.category.name}}</a>
+                    <h2 class="blog__title">{{new.title}}</h2>
+                    <p class="blog__text">{{new.body|truncatechars:120}}</p>
+                    <a class="blog__link" href="{% url 'blog:post_detail' new.slug %}">Read more...</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="right">
+        <h2 class="section-title">Search posts</h2>
+        <form class="form-search" method="GET">
+            <input type="search" name="q" value={{search_query}}>
+            <button type="submit">search</button>
+        </form>
+        <div class="category">
+            <h2 class="category-title">Category posts</h2>
+            <ul class="category-list">
+                {% for category in categories %}
+                    <li class="category-list__item">
+                        <a class="category-list__link" href="#">
+                            {{category.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+</div>
+{%endblock%}

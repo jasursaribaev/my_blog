@@ -1,0 +1,23 @@
+.posts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.post {
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.post h5 {
+    margin-bottom: 10px;
+}
+
+.post-title {
+    color: tomato;
+    margin-bottom: 12px;
+}
+
+.post-text {
+    margin-bottom: 12px;
+}

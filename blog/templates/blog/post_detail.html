@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{post.title}}
+{% endblock  %}
+
+{%block css_files%}
+    <link rel="stylesheet" href="{% static 'blog/post_detail.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{%endblock%}
+
+{%block content%}
+<div class="container">
+    <div class="blog">
+        <h2 class="blog__title">{{post.title}}</h2>
+        <p class="blog__text">{{post.body}}</p>
+    </div>
+    <br>
+    <hr>
+    <h4>Post comments</h4>
+    <br>
+    <form method="POST" action="{% url 'blog:reviews' post.slug %}">
+        {% csrf_token %}
+        {% comment %} <input type="hidden" name="user" value="{{request.user.id}}">
+        <input type="hidden" name="post" value="{{post.slug}}"> {% endcomment %}
+        {{form.comment}}
+        <br>
+        <br>
+        <button class="comment-btn" type="submit">Send Comment</button>
+    </form>
+    <div class="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <img class="comment-img" src="{{comment.user.image.url}}" alt="">
+                <div class="comment-info">
+                    <div class="comment-group">
+                        <h4 class="comment-author">{{comment.user.username}}</h4>
+                        {% if comment.user.id == request.user.id %}
+                            <a href="#">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        {%endif%}
+                    </div>
+                    <p class="comment-time">{{comment.created_at|date:'Y-m-d'}}</p>
+                    <p class="comment-body">{{comment.comment}}</p>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}
